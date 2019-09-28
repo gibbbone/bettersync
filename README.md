@@ -17,6 +17,7 @@ A little Python command line utility to make `rsync` easier to use.
 - Show history 
 
 ## TODO
+- Dry run should directy lead to not-dryrun without repeting procedure
 - Radio button breaks PromptSession app. Avoid it.
 - Remove `mnt` as root folder
 - History mode: query history for full routines
