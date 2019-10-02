@@ -1,3 +1,4 @@
 *.pyc
 data/*
 commit_message.md
+bettersync/*OLD.py
