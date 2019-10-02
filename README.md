@@ -17,15 +17,21 @@ A little Python command line utility to make `rsync` easier to use.
 - Show history 
 
 ## TODO
-- Dry run should directy lead to not-dryrun without repeting procedure
-- Radio button breaks PromptSession app. Avoid it.
-- Remove `mnt` as root folder
+- Dry run should directy lead to not-dryrun without repeting procedure ✔️
+- Radio button breaks PromptSession app. Avoid it.✔️
+- Keyboard shortcuts 
+	- Shortcut for history mode (Ctrl-H) ✔️
+	- Go back to previous step and modify (Ctrl-Z)
+		- substitute with Tab navigation ✔️
 - History mode: query history for full routines
 	- Display nicely: check how to do it with `prompt_toolkit`
-- Keyboard shortcuts
-	- Shortcut for history mode (Ctrl-H)
-	- Go back to previous step and modify (Ctrl-Z)
+- Default CLI arguments to use it as vanilla Rsync
+	- storing in db
+- Configuration file and configuration routines
+	- absolute path of db
+- Remove `mnt` as root folder	
 - Reverse mode or merged mode: instead of separate source and target paths suggestions get their union set
 	- update while typing or reload everything?
 - Tree exploration for new folders
+	- Check completers>filesystem
 - Change prompt colors

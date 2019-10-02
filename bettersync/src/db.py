@@ -6,8 +6,15 @@ from datetime import datetime
 # called 'database.sqlite3' in the same directory as this script
 
 #DEFAULT_PATH = os.path.join(os.path.dirname(__file__), 'database.sqlite3')
-DEFAULT_PATH = os.path.join(os.getcwd(), 'data', 'history.db') 
-DEFAULT_START_FILE = os.path.join(os.getcwd(), 'data', 'path_list.csv') 
+# TODO: manage execution from everywhere (i.e: hardcode db path)
+DEFAULT_PATH = os.path.join(
+    os.getcwd(),
+    #'bettersync', 
+    'data', 'history.db') 
+DEFAULT_START_FILE = os.path.join(
+    os.getcwd(),
+    #'bettersync', 
+    'data', 'path_list.csv') 
 
 def db_connect(db_path=DEFAULT_PATH):
     con = sqlite3.connect(db_path)
@@ -100,3 +107,25 @@ def get_target_paths(con):
     cur.execute(sql_command)
     results = cur.fetchall()
     return [r[0] for r in results]
+
+def initialize_database():
+    # create database if it does not exist
+    con = db_connect()
+    cur = con.cursor()
+    cur.execute("SELECT name FROM sqlite_master WHERE type='table'")
+    if len(cur.fetchall()) == 0:
+        print("(Initial config): Database is empty. Initializing..")
+        create_tables(con)
+        if os.path.exists(DEFAULT_START_FILE):
+            print(
+                "(Initial config): Database populated from file:\n{}".format(DEFAULT_START_FILE))                
+            with open(DEFAULT_START_FILE, 'r') as path_file:
+                my_paths = [tuple(row) for row in csv.reader(path_file, skipinitialspace=True)]        
+            con = db_connect()
+            for p1,p2 in my_paths:
+                create_rsync_record(con, p1, p2)        
+        else:
+            print("(Initial config): Starting file not found. Database intialized with empty tables.")  
+        return
+    else:
+        return  

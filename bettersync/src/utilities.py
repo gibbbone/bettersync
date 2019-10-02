@@ -3,10 +3,16 @@ from prompt_toolkit.application import Application
 from prompt_toolkit.key_binding.defaults import load_key_bindings
 from prompt_toolkit.key_binding.key_bindings import KeyBindings, merge_key_bindings
 from prompt_toolkit.layout import Layout
-from prompt_toolkit.widgets import RadioList, Label
+from prompt_toolkit.widgets import RadioList, Label, TextArea
 from prompt_toolkit.keys import Keys
 from prompt_toolkit.layout.containers import HSplit
-
+from prompt_toolkit.layout.processors import Processor, Transformation
+from prompt_toolkit.formatted_text import (
+    FormattedText, 
+    to_formatted_text, 
+    fragment_list_to_text, 
+    HTML
+)
 class RadioListFast(RadioList):
     """
     List of radio buttons. Only one can be checked at the same time.
@@ -57,3 +63,20 @@ def radiolist_dialog(title='', values=None, style=None, async_=False):
         return application.run_async()
     else:
         return application.run()         
+
+class FormatText(Processor):
+    def apply_transformation(self, transformation_input):        
+        fragments = to_formatted_text(HTML(fragment_list_to_text(transformation_input.fragments)))
+        return Transformation(fragments)
+
+def make_text_area(prompt):
+    "Wrapper to simplify layout construction"
+    area = TextArea(
+        height=1, 
+        prompt=prompt, 
+        style='class:input-field', 
+        multiline=False, 
+        wrap_lines=True, 
+        focus_on_click=True,        
+        complete_while_typing=True)
+    return area

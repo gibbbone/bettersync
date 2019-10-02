@@ -1,6 +1,5 @@
-#!/usr/bin/env python3
 from prompt_toolkit.patch_stdout import patch_stdout
-from bettersync import BetteRsync
+from src.bettersync import BetteRsync
 
 if __name__ == '__main__':
     bettersync = BetteRsync()
